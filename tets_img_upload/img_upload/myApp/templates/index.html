@@ -1,12 +1,71 @@
-<form method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-   {{ form.as_p }}
-  <button type="submit">Upload</button>
-</form>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'animate/animate.css' %}">
+</head>
+<body >
+   
+    <div class="container" id="particles-j">
+      <div class="row justify-content-between">
+        <!-- col 1 -->
+        <div class="col-*-4 p-5 m-5 shadow-lg bg-white rounded animate__animated animate__rollIn">
+          <img src='{% static "a.png" %}' class="img-fluid" style="width: 300px;" alt="">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- {{ form.as_p }} -->
+            {% for item in form %}
+              {{item}} <br>
+            {% endfor %}
+            <div class="py-3">
+              <button class="btn btn-primary" type="submit">Analyser</button>
+            </div>
+          </form>
+        </div>
+        <!-- end col 1 -->
+        <!-- col 2 -->
+        {% if predict_proba_0_css %}
+        <div class="col-*-8 p-5 my-5 shadow-lg bg-white rounded animate__animated  animate__backInRight" style="width: 55%;">
+            <div class="col">
+             
+              <div class="row px-3">
+                  <div style="width: {{predict_proba_0_css}}%; height: 30px; background-color: blue; opacity: 0.7;" class="rounded"></div>
+                  <br>
+                  <span> {{ predict_proba_0 }} %</span>
+              </div>
+              <br>
+              <div class="row px-3">
+                <div style="width: {{predict_proba_1_css}}%; height: 30px; background-color: grey;" class="rounded"></div>
+                <br>
+                <span> {{ predict_proba_1 }} %</span>
+              </div>
+          
+            </div>
+            <!-- img -->
+            <div class="col p-3">
+              <div class="row px-3">
+                  <h4 class="text-secondary">Résultat: {{ predictions }}</h4> <br>
+              </div>
+              <div class="row px-3">
+                  <h4 class="text-muted">Patient: {{img_obj.title}}</h4>
+              </div>
+            </div>
+            <div class="col">
+              <img src="{{ img_obj.image.url}}" class="img-fluid" alt="connect" >
+            </div>
+        </div>
+        <!-- end col 2 -->
+        {% endif %}
+      </div>
+    </div> 
 
-{% if img_obj %}
-  <h3>Succesfully uploaded : {{img_obj.title}}</h3>
-  <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
-  <br>
-  Predictions : {{ predictions }}
-{% endif %}
+    <script src= '{% static "particle.js" %}'></script> 
+    <script type="text/javascript">
+    particlesJS("particles-js", {"particles":{"number":{"value":60,"density":{"enable":true,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":0.25,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":false,"speed":40,"size_min":0.1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#ffffff","opacity":0.3,"width":1},"move":{"enable":true,"speed":3,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});var count_particles, stats, update; stats = new Stats; stats.setMode(0); stats.domElement.style.position = 'absolute'; stats.domElement.style.left = '0px'; stats.domElement.style.top = '0px'; document.body.appendChild(stats.domElement); count_particles = document.querySelector('.js-count-particles'); update = function() { stats.begin(); stats.end(); if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) { count_particles.innerText = window.pJSDom[0].pJS.particles.array.length; } requestAnimationFrame(update); }; requestAnimationFrame(update);;
+    </script>
+</body>
+</html>

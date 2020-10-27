@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-*-6" style="padding-top: 100px;">
+                <div class="row d-flex flex-column">
+                    <div class="col-*-12">
+                        <h1 class="text-muted">Skin Cancer Detection</h1> 
+                    </div>
+                    <div class="col-*-12">
+                        <p class="text-muted">L'intelligence artificielle au service de la santé.</p>
+                    </div>
+                    <div class="col-*-12">
+                        <a href="analyse/">
+                            <button class="btn btn-outline-dark">Commencez</button>
+                        </a>
+                    </div>
+                    <div class="col-*-12">
+                        <img src="{% static 'doc.png' %}" style="width: 400px" alt="">
+                    </div>  
+                </div>
+            </div>
+            <div class="col-*-6 py-5">
+                <img src="{% static 'home.png' %}" style="width: 600px" alt="">
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

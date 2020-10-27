@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .models import ImageUpload
 from.forms import ImageForm
 
+
+
 # Create your views here.
 def getPredictions(image_url):
     #Load image 
@@ -27,11 +29,13 @@ def getPredictions(image_url):
     model = pickle.load(open(my_file,"rb"))
     #Prediction
     prediction = model.predict(img)
+    predict_proba = model.predict_proba(img)
+    print(predict_proba[0])
     #Return Value
     if(prediction == 0):
-        return "benign"
+        return "benign",predict_proba[0][0], predict_proba[0][1]
     elif(prediction == 1):
-        return "malign"
+        return "malign",predict_proba[0][0], predict_proba[0][1]
     else:
         return "error"
 
@@ -44,8 +48,22 @@ def image_upload_view(request):
             # Get the current instance object to display in the template
             img_obj = form.instance
             #print(img_obj.image.url)
-            predictions = getPredictions(img_obj.image.url)
-            return render(request, 'index.html', {'form': form, 'img_obj': img_obj,'predictions':predictions})
+            predictions, predict_proba_0, predict_proba_1 = getPredictions(img_obj.image.url)
+            return render(request, 
+                            'index.html',
+                             {
+                                'form': form,
+                                'img_obj': img_obj,
+                                'predictions':predictions,
+                                'predict_proba_0': predict_proba_0*100,
+                                'predict_proba_1': predict_proba_1*100,
+                                'predict_proba_0_css': predict_proba_0*200,
+                                'predict_proba_1_css': predict_proba_1*200
+                            })
     else:
         form = ImageForm()
     return render(request, 'index.html', {'form': form})
+
+
+def test_home(request):
+    return render(request,'test.html',{})

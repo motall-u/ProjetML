@@ -118,6 +118,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+STATICFILES_DIRS = (
+
+    'C:/Users/HP/Desktop/TP_NF_ALL/Projet_NF/web_interface/tets_img_upload/img_upload/myApp/static/',
+)
+
 STATIC_URL = '/static/'
 
 # Base url to serve media files
